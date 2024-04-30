@@ -50,6 +50,7 @@ public class UpdateChecker extends BukkitRunnable {
             int currentPart = Integer.parseInt(currentParts[i]);
             int newPart = Integer.parseInt(newParts[i]);
             if (newPart > currentPart) return Status.UPDATE_NEEDED;
+            if (newPart < currentPart) return Status.LATEST_VERSION;
         }
         if (newType.ordinal() > currentType.ordinal()) return Status.UPDATE_NEEDED;
         if (newType == currentType) {
