@@ -2,6 +2,7 @@ package lol.pyr.znpcsplus.conversion;
 
 import lol.pyr.znpcsplus.config.ConfigManager;
 import lol.pyr.znpcsplus.conversion.citizens.CitizensImporter;
+import lol.pyr.znpcsplus.conversion.fancynpcs.FancyNpcsImporter;
 import lol.pyr.znpcsplus.conversion.znpcs.ZNpcImporter;
 import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
 import lol.pyr.znpcsplus.npc.NpcRegistryImpl;
@@ -34,6 +35,8 @@ public class DataImporterRegistry {
                 packetFactory, textSerializer, typeRegistry, propertyRegistry, skinCache, new File(pluginsFolder, "ZNPCsPlusLegacy/data.json"), bungeeConnector)));
         register("citizens", LazyLoader.of(() -> new CitizensImporter(configManager, adventure, taskScheduler,
                 packetFactory, textSerializer, typeRegistry, propertyRegistry, skinCache, new File(pluginsFolder, "Citizens/saves.yml"), npcRegistry)));
+        register("fancynpcs", LazyLoader.of(() -> new FancyNpcsImporter(configManager, adventure, taskScheduler,
+                packetFactory, textSerializer, typeRegistry, propertyRegistry, skinCache, new File(pluginsFolder, "FancyNpcs/npcs.yml"), npcRegistry)));
     }
 
     private void register(String id, LazyLoader<DataImporter> loader) {
