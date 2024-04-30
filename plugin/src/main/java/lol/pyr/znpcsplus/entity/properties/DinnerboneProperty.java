@@ -14,11 +14,13 @@ import java.util.Map;
 import java.util.Optional;
 
 public class DinnerboneProperty extends EntityPropertyImpl<Boolean> {
+    private final boolean optional;
     private final Object serialized;
     private final EntityDataType<?> type;
 
     public DinnerboneProperty(boolean legacy, boolean optional) {
         super("dinnerbone", false, Boolean.class);
+        this.optional = optional;
         Component name = Component.text("Dinnerbone");
         Object serialized = legacy ? AdventureSerializer.getLegacyGsonSerializer().serialize(name) :
                 optional ? name : LegacyComponentSerializer.legacySection().serialize(name);
@@ -28,6 +30,6 @@ public class DinnerboneProperty extends EntityPropertyImpl<Boolean> {
 
     @Override
     public void apply(Player player, PacketEntity entity, boolean isSpawned, Map<Integer, EntityData> properties) {
-        properties.put(2, new EntityData(2, type, entity.getProperty(this) ? serialized : null));
+        properties.put(2, new EntityData(2, type, entity.getProperty(this) ? serialized : optional ? null : ""));
     }
 }
