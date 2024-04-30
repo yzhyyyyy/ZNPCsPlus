@@ -373,6 +373,15 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         register(new EncodedByteProperty<>("sheep_color", DyeColor.WHITE, sheepIndex, DyeColor::getWoolData));
         register(new BitsetProperty("sheep_sheared", sheepIndex, 0x10, false, legacyBooleans)); // no need to link because sheep_sheared is only visible when sheep_color is WHITE
 
+        // Villager
+        int villagerIndex;
+        if (ver.isOlderThan(ServerVersion.V_1_14)) {
+            if (ver.isNewerThanOrEquals(ServerVersion.V_1_10)) villagerIndex = 13;
+            else if (ver.isNewerThanOrEquals(ServerVersion.V_1_9)) villagerIndex = 12;
+            else villagerIndex = 16;
+            register(new EncodedIntegerProperty<>("villager_profession", VillagerProfession.NONE, villagerIndex, VillagerProfession::getLegacyId));
+        }
+
         // Wolf
         int wolfIndex;
         if (ver.isNewerThanOrEquals(ServerVersion.V_1_17)) wolfIndex = 19;
@@ -501,12 +510,8 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         register(new CustomTypeProperty<>("pose", 6, NpcPose.STANDING, EntityDataTypes.ENTITY_POSE, npcPose -> EntityPose.valueOf(npcPose.name())));
 
         // Villager
-        final int villagerIndex;
         if (ver.isNewerThanOrEquals(ServerVersion.V_1_17)) villagerIndex = 18;
         else if (ver.isNewerThanOrEquals(ServerVersion.V_1_15)) villagerIndex = 17;
-        else if (ver.isNewerThanOrEquals(ServerVersion.V_1_14)) villagerIndex = 16;
-        else if (ver.isNewerThanOrEquals(ServerVersion.V_1_10)) villagerIndex = 13;
-        else if (ver.isNewerThanOrEquals(ServerVersion.V_1_9)) villagerIndex = 12;
         else villagerIndex = 16;
         register(new VillagerTypeProperty("villager_type", villagerIndex, VillagerType.PLAINS));
         register(new VillagerProfessionProperty("villager_profession", villagerIndex, VillagerProfession.NONE));
