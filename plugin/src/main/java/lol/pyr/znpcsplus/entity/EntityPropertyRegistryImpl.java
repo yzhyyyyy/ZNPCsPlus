@@ -612,7 +612,9 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         if (!ver.isNewerThanOrEquals(ServerVersion.V_1_20)) return;
 
         // Camel
-        register(new BooleanProperty("bashing", 18, false, legacyBooleans));
+        int camelIndex = 18;
+        register(new BooleanProperty("bashing", camelIndex++, false, legacyBooleans));
+        register(new CamelSittingProperty(6, camelIndex));
 
         // Sniffer
         register(new CustomTypeProperty<>("sniffer_state", 17, SnifferState.IDLING, EntityDataTypes.SNIFFER_STATE, state -> com.github.retrooper.packetevents.protocol.entity.sniffer.SnifferState.valueOf(state.name())));
