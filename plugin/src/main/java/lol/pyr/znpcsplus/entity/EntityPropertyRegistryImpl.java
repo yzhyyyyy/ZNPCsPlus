@@ -154,7 +154,11 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         else if (ver.isNewerThanOrEquals(ServerVersion.V_1_10)) babyIndex = 12;
         else if (ver.isNewerThanOrEquals(ServerVersion.V_1_9)) babyIndex = 11;
         else babyIndex = 12;
-        register(new BooleanProperty("baby", babyIndex, false, legacyBooleans));
+        if (ver.isOlderThan(ServerVersion.V_1_9)) {
+            register(new EncodedByteProperty<>("baby", false, babyIndex, obj -> (byte) (obj ? -1 : 0)));
+        } else {
+            register(new BooleanProperty("baby", babyIndex, false, legacyBooleans));
+        }
 
         // Player
         register(new DummyProperty<>("skin", SkinDescriptor.class, false));
