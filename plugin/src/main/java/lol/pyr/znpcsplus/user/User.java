@@ -11,6 +11,7 @@ import java.util.UUID;
 public class User {
     private final UUID uuid;
     private long lastNpcInteraction;
+    private long lastNpcKnockback;
     private final Map<UUID, Long> actionCooldownMap = new HashMap<>();
 
     public User(UUID uuid) {
@@ -24,6 +25,14 @@ public class User {
     public boolean canInteract() {
         if (System.currentTimeMillis() - lastNpcInteraction > 100L) {
             lastNpcInteraction = System.currentTimeMillis();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canKnockback(int cooldown) {
+        if (System.currentTimeMillis() - lastNpcKnockback > cooldown) {
+            lastNpcKnockback = System.currentTimeMillis();
             return true;
         }
         return false;

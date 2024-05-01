@@ -24,6 +24,7 @@ import lol.pyr.znpcsplus.util.*;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
+import org.bukkit.Sound;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -84,6 +85,7 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         registerEnumSerializer(SnifferState.class);
         registerEnumSerializer(RabbitType.class);
         registerEnumSerializer(AttachDirection.class);
+        registerEnumSerializer(Sound.class);
 
         registerPrimitiveSerializers(Integer.class, Boolean.class, Double.class, Float.class, Long.class, Short.class, Byte.class, String.class);
 
@@ -121,6 +123,20 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         register(new DummyProperty<>("view_distance", configManager.getConfig().viewDistance()));
 
         register(new DummyProperty<>("permission_required", false));
+
+        register(new DummyProperty<>("player_knockback", false));
+        register(new DummyProperty<>("player_knockback_exempt_permission", String.class));
+        register(new DummyProperty<>("player_knockback_distance", 0.4));
+        register(new DummyProperty<>("player_knockback_vertical", 0.4));
+        register(new DummyProperty<>("player_knockback_horizontal", 0.9));
+        register(new DummyProperty<>("player_knockback_cooldown", 1500));
+        register(new DummyProperty<>("player_knockback_sound", false));
+        register(new DummyProperty<>("player_knockback_sound_volume", 1.0f));
+        register(new DummyProperty<>("player_knockback_sound_pitch", 1.0f));
+        register(new DummyProperty<>("player_knockback_sound_name", Sound.valueOf(
+            PacketEvents.getAPI().getServerManager().getVersion().isOlderThan(ServerVersion.V_1_9) ?
+                    "VILLAGER_NO" : "ENTITY_VILLAGER_NO"
+        )));
 
         register(new GlowProperty(packetFactory));
         register(new BitsetProperty("fire", 0, 0x01));

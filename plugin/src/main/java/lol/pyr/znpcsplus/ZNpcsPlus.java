@@ -152,7 +152,7 @@ public class ZNpcsPlus {
             pluginManager.registerEvents(new UpdateNotificationListener(this, adventure, updateChecker, scheduler), bootstrap);
         }
 
-        scheduler.runDelayedTimerAsync(new NpcProcessorTask(npcRegistry, propertyRegistry), 60L, 3L);
+        scheduler.runDelayedTimerAsync(new NpcProcessorTask(npcRegistry, propertyRegistry, userManager), 60L, 3L);
         scheduler.runDelayedTimerAsync(new HologramRefreshTask(npcRegistry), 60L, 20L);
         scheduler.runDelayedTimerAsync(new SkinCacheCleanTask(skinCache), 1200, 1200);
         pluginManager.registerEvents(new ViewableHideOnLeaveListener(), bootstrap);
@@ -275,6 +275,7 @@ public class ZNpcsPlus {
         registerEnumParser(manager, SnifferState.class, incorrectUsageMessage);
         registerEnumParser(manager, RabbitType.class, incorrectUsageMessage);
         registerEnumParser(manager, AttachDirection.class, incorrectUsageMessage);
+        registerEnumParser(manager, Sound.class, incorrectUsageMessage);
 
         manager.registerCommand("npc", new MultiCommand(bootstrap.loadHelpMessage("root"))
                 .addSubcommand("center", new CenterCommand(npcRegistry))
