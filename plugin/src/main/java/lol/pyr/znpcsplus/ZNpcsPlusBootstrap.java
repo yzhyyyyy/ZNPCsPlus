@@ -45,7 +45,7 @@ public class ZNpcsPlusBootstrap extends JavaPlugin {
         loader.addRelocation(decrypt("org..yaml..snakeyaml"), "lol.pyr.znpcsplus.libraries.snakeyaml");
         loader.addRelocation(decrypt("space..arim..dazzleconf"), "lol.pyr.znpcsplus.libraries.dazzleconf");
         loader.addRelocation(decrypt("lol..pyr..director"), "lol.pyr.znpcsplus.libraries.command");
-        
+
         loader.loadLibrary(decrypt("com..google..guava"), "guava", "18.0");
         loader.loadLibrary(decrypt("com..google..code..gson"), "gson", "2.10.1");
 
@@ -54,8 +54,8 @@ public class ZNpcsPlusBootstrap extends JavaPlugin {
 
         loader.loadLibrary("me.robertlit", "SpigotResourcesAPI", "2.0", "https://repo.pyr.lol/releases");
 
-        loader.loadLibrary(decrypt("com..github..retrooper..packetevents"), "api", "2.2.1", "https://repo.codemc.io/repository/maven-releases/");
-        loader.loadLibrary(decrypt("com..github..retrooper..packetevents"), "spigot", "2.2.1", "https://repo.codemc.io/repository/maven-releases/");
+        loader.loadLibrary(decrypt("com..github..retrooper..packetevents"), "api", "2.3.0", "https://repo.codemc.io/repository/maven-releases/");
+        loader.loadLibrary(decrypt("com..github..retrooper..packetevents"), "spigot", "2.3.0", "https://repo.codemc.io/repository/maven-releases/");
 
         loader.loadLibrary(decrypt("space..arim..dazzleconf"), "dazzleconf-core", "1.2.1");
         loader.loadLibrary(decrypt("space..arim..dazzleconf"), "dazzleconf-ext-snakeyaml", "1.2.1");
