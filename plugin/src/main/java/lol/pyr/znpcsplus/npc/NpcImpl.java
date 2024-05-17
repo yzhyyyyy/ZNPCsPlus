@@ -164,6 +164,12 @@ public class NpcImpl extends Viewable implements Npc {
         setProperty((EntityPropertyImpl<com.github.retrooper.packetevents.protocol.item.ItemStack>) key, SpigotConversionUtil.fromBukkitItemStack(value));
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public ItemStack getItemProperty(EntityProperty<?> key) {
+        return SpigotConversionUtil.toBukkitItemStack(getProperty((EntityProperty<com.github.retrooper.packetevents.protocol.item.ItemStack>) key));
+    }
+
     public <T> void setProperty(EntityPropertyImpl<T> key, T value) {
         if (key == null) return;
         if (value == null || value.equals(key.getDefaultValue())) propertyMap.remove(key);

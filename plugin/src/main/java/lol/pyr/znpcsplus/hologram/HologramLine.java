@@ -1,6 +1,7 @@
 package lol.pyr.znpcsplus.hologram;
 
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
+import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import lol.pyr.znpcsplus.api.entity.EntityProperty;
 import lol.pyr.znpcsplus.api.entity.PropertyHolder;
 import lol.pyr.znpcsplus.entity.PacketEntity;
@@ -74,6 +75,12 @@ public class HologramLine<M> implements PropertyHolder {
     @Override
     public void setItemProperty(EntityProperty<?> key, ItemStack value) {
         throw new UnsupportedOperationException("Can't set properties on a hologram line");
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public ItemStack getItemProperty(EntityProperty<?> key) {
+        return SpigotConversionUtil.toBukkitItemStack(((EntityProperty<com.github.retrooper.packetevents.protocol.item.ItemStack>) key).getDefaultValue());
     }
 
     @Override

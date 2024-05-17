@@ -44,6 +44,14 @@ public interface PropertyHolder {
     void setItemProperty(EntityProperty<?> key, ItemStack value);
 
     /**
+     * Weird fix which is sadly required in order to not decrease performance
+     * when using item properties, read https://github.com/Pyrbu/ZNPCsPlus/pull/129#issuecomment-1948777764
+     *
+     * @param key Unique key representing a property
+     */
+    ItemStack getItemProperty(EntityProperty<?> key);
+
+    /**
      * Method used to get a set of all of the property keys that this holder has a value for
      *
      * @return Set of property keys

@@ -108,6 +108,11 @@ public class PacketEntity implements PropertyHolder {
     }
 
     @Override
+    public ItemStack getItemProperty(EntityProperty<?> key) {
+        return properties.getItemProperty(key);
+    }
+
+    @Override
     public Set<EntityProperty<?>> getAppliedProperties() {
         return properties.getAppliedProperties();
     }
