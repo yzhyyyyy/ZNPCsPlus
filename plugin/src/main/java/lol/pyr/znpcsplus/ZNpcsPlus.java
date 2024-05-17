@@ -131,7 +131,7 @@ public class ZNpcsPlus {
                 scheduler, packetFactory, textSerializer, typeRegistry, getDataFolder().getParentFile(),
                 propertyRegistry, skinCache, npcRegistry, bungeeConnector);
 
-        log(ChatColor.WHITE + " * Registerring components...");
+        log(ChatColor.WHITE + " * Registering components...");
 
         bungeeConnector.registerChannel();
         shutdownTasks.add(bungeeConnector::unregisterChannel);
