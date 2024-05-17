@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  * pre-1.17 had all of their classes "flattened" into one package.
  */
 public class ReflectionPackage {
-    private static final String VERSION = Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
+    private static final String VERSION = generateVersion();
     public static final String BUKKIT = "org.bukkit.craftbukkit." + VERSION;
     private static final boolean flattened = !PacketEvents.getAPI().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_17);
 
@@ -28,7 +28,13 @@ public class ReflectionPackage {
     public static String joinWithDot(String... parts) {
         return Arrays.stream(parts)
                 .filter(Objects::nonNull)
-                .filter(p -> p.length() != 0)
+                .filter(p -> !p.isEmpty())
                 .collect(Collectors.joining("."));
+    }
+
+    private static String generateVersion() {
+        String[] parts = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
+        if (parts.length > 3) return parts[3];
+        return "";
     }
 }
