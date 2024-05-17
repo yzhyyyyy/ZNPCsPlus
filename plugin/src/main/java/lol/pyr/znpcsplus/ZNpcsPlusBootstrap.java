@@ -2,7 +2,6 @@ package lol.pyr.znpcsplus;
 
 import lol.pyr.director.adventure.command.CommandContext;
 import lol.pyr.director.common.message.Message;
-import lol.pyr.znpcsplus.libraries.LibraryLoader;
 import lol.pyr.znpcsplus.util.FileUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -32,6 +31,7 @@ public class ZNpcsPlusBootstrap extends JavaPlugin {
             Bukkit.getPluginManager().disablePlugin(this);
             return;
         }
+        /*
         getLogger().info("Downloading and loading libraries, this might take a while if this is the first time you're launching the plugin");
         LibraryLoader loader = new LibraryLoader(this, new File(getDataFolder(), "libraries"));
 
@@ -81,6 +81,7 @@ public class ZNpcsPlusBootstrap extends JavaPlugin {
         loader.deleteUnloadedLibraries();
 
         getLogger().info("Loaded " + loader.loadedLibraryCount() + " libraries!");
+         */
         zNpcsPlus = new ZNpcsPlus(this);
     }
 
