@@ -15,14 +15,14 @@ import java.util.stream.Collectors;
  */
 public class ReflectionPackage {
     private static final String VERSION = generateVersion();
-    public static final String BUKKIT = "org.bukkit.craftbukkit." + VERSION;
+    public static final String BUKKIT = "org.bukkit.craftbukkit" + VERSION;
     private static final boolean flattened = !PacketEvents.getAPI().getServerManager().getVersion().isNewerThanOrEquals(ServerVersion.V_1_17);
 
     /**
      * Check if the classes are flattened, if so we need to add the version string into the
      * package string which is another quirk of the old server jars.
      */
-    public static final String MINECRAFT = joinWithDot("net.minecraft", flattened ? "server." + VERSION : "");
+    public static final String MINECRAFT = joinWithDot("net.minecraft", flattened ? "server" + VERSION : "");
     public static final String ENTITY = flattened ? MINECRAFT : joinWithDot(MINECRAFT, "world.entity");
 
     public static String joinWithDot(String... parts) {
@@ -34,7 +34,7 @@ public class ReflectionPackage {
 
     private static String generateVersion() {
         String[] parts = Bukkit.getServer().getClass().getPackage().getName().split("\\.");
-        if (parts.length > 3) return parts[3];
+        if (parts.length > 3) return "." + parts[3];
         return "";
     }
 }
