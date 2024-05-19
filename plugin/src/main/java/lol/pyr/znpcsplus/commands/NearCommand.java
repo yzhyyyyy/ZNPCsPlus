@@ -13,6 +13,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class NearCommand implements CommandHandler {
@@ -30,7 +31,7 @@ public class NearCommand implements CommandHandler {
         double radius = Math.pow(raw, 2);
 
         List<NpcEntryImpl> entries = npcRegistry.getAllModifiable().stream()
-                .filter(entry -> entry.getNpc().getWorld().equals(player.getWorld()))
+                .filter(entry -> Objects.equals(entry.getNpc().getWorld(), player.getWorld()))
                 .filter(entry -> entry.getNpc().getBukkitLocation().distanceSquared(player.getLocation()) < radius)
                 .collect(Collectors.toList());
 
