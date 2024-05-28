@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MoveCommand implements CommandHandler {
     private final NpcRegistryImpl npcRegistry;
@@ -27,7 +28,7 @@ public class MoveCommand implements CommandHandler {
         Player player = context.ensureSenderIsPlayer();
         NpcImpl npc = context.parse(NpcEntryImpl.class).getNpc();
         npc.setLocation(new NpcLocation(player.getLocation()));
-        if (!npc.getWorld().equals(player.getWorld())) npc.setWorld(player.getWorld());
+        if (!Objects.equals(npc.getWorld(), player.getWorld())) npc.setWorld(player.getWorld());
         context.send(Component.text("NPC moved to your current location.", NamedTextColor.GREEN));
     }
 

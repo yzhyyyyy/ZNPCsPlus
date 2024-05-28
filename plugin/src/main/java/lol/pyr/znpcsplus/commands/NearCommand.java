@@ -10,6 +10,7 @@ import lol.pyr.znpcsplus.util.NpcLocation;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -32,7 +33,10 @@ public class NearCommand implements CommandHandler {
 
         List<NpcEntryImpl> entries = npcRegistry.getAllModifiable().stream()
                 .filter(entry -> Objects.equals(entry.getNpc().getWorld(), player.getWorld()))
-                .filter(entry -> entry.getNpc().getBukkitLocation().distanceSquared(player.getLocation()) < radius)
+                .filter(entry -> {
+                    Location loc = entry.getNpc().getBukkitLocation();
+                    return loc != null && loc.distanceSquared(player.getLocation()) < radius;
+                })
                 .collect(Collectors.toList());
 
         if (entries.isEmpty()) context.halt(Component.text("There are no npcs within " + raw + " blocks around you.", NamedTextColor.RED));

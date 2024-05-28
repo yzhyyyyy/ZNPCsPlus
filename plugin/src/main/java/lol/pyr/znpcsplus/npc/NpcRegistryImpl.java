@@ -1,12 +1,17 @@
 package lol.pyr.znpcsplus.npc;
 
 import lol.pyr.znpcsplus.ZNpcsPlus;
+import lol.pyr.znpcsplus.api.entity.EntityProperty;
 import lol.pyr.znpcsplus.api.npc.NpcEntry;
 import lol.pyr.znpcsplus.api.npc.NpcRegistry;
 import lol.pyr.znpcsplus.api.npc.NpcType;
 import lol.pyr.znpcsplus.config.ConfigManager;
 import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
+import lol.pyr.znpcsplus.hologram.HologramItem;
+import lol.pyr.znpcsplus.hologram.HologramLine;
+import lol.pyr.znpcsplus.hologram.HologramText;
 import lol.pyr.znpcsplus.interaction.ActionRegistry;
+import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
 import lol.pyr.znpcsplus.packets.PacketFactory;
 import lol.pyr.znpcsplus.scheduling.TaskScheduler;
 import lol.pyr.znpcsplus.storage.NpcStorage;
@@ -151,6 +156,35 @@ public class NpcRegistryImpl implements NpcRegistry {
         NpcEntryImpl entry = new NpcEntryImpl(id, npc);
         register(entry);
         return entry;
+    }
+
+    public NpcEntryImpl clone(String id, String newId, World newWorld, NpcLocation newLocation) {
+        NpcEntryImpl oldNpc = getById(id);
+        if (oldNpc == null) return null;
+        NpcEntryImpl newNpc = create(newId, newWorld, oldNpc.getNpc().getType(), newLocation);
+        newNpc.enableEverything();
+
+        for (EntityProperty<?> property : oldNpc.getNpc().getAllProperties()) {
+            newNpc.getNpc().UNSAFE_setProperty(property, oldNpc.getNpc().getProperty(property));
+        }
+
+        for (InteractionActionImpl action : oldNpc.getNpc().getActions()) {
+            newNpc.getNpc().addAction(action);
+        }
+
+        for (HologramLine<?> line : oldNpc.getNpc().getHologram().getLines()) {
+            if (line instanceof HologramText) {
+                HologramText text = (HologramText) line;
+                newNpc.getNpc().getHologram().addTextLineComponent(text.getValue());
+            }
+            else if (line instanceof HologramItem) {
+                HologramItem item = (HologramItem) line;
+                newNpc.getNpc().getHologram().addItemLinePEStack(item.getValue());
+            }
+            else throw new IllegalArgumentException("Unknown hologram line type during clone");
+        }
+
+        return newNpc;
     }
 
     @Override

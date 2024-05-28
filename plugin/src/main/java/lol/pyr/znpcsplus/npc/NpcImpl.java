@@ -20,6 +20,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -75,8 +76,10 @@ public class NpcImpl extends Viewable implements Npc {
         return location;
     }
 
-    public Location getBukkitLocation() {
-        return location.toBukkitLocation(getWorld());
+    public @Nullable Location getBukkitLocation() {
+        World world = getWorld();
+        if (world == null) return null;
+        return location.toBukkitLocation(world);
     }
 
     public void setLocation(NpcLocation location) {
@@ -112,7 +115,7 @@ public class NpcImpl extends Viewable implements Npc {
         return uuid;
     }
 
-    public World getWorld() {
+    public @Nullable World getWorld() {
         return Bukkit.getWorld(worldName);
     }
 
@@ -179,6 +182,11 @@ public class NpcImpl extends Viewable implements Npc {
 
     @SuppressWarnings("unchecked")
     public <T> void UNSAFE_setProperty(EntityPropertyImpl<?> property, Object value) {
+        setProperty((EntityPropertyImpl<T>) property, (T) value);
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> void UNSAFE_setProperty(EntityProperty<?> property, Object value) {
         setProperty((EntityPropertyImpl<T>) property, (T) value);
     }
 
