@@ -637,7 +637,7 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         register(new EncodedIntegerProperty<>("frog_variant", FrogVariant.TEMPERATE, 17, Enum::ordinal, EntityDataTypes.FROG_VARIANT));
 
         // Warden
-        register(new EncodedIntegerProperty<>("warden_angry", 0, 16, b -> Math.min(150, Math.max(0, b))));
+        register(new EncodedIntegerProperty<>("warden_anger", 0, 16, b -> Math.min(150, Math.max(0, b))));
 
         if (!ver.isNewerThanOrEquals(ServerVersion.V_1_20)) return;
 
