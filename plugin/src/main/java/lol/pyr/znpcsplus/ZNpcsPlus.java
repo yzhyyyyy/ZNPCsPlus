@@ -282,6 +282,7 @@ public class ZNpcsPlus {
         manager.registerCommand("npc", new MultiCommand(bootstrap.loadHelpMessage("root"))
                 .addSubcommand("center", new CenterCommand(npcRegistry))
                 .addSubcommand("create", new CreateCommand(npcRegistry, typeRegistry))
+                .addSubcommand("clone", new CloneCommand(npcRegistry))
                 .addSubcommand("reloadconfig", new ReloadConfigCommand(configManager))
                 .addSubcommand("toggle", new ToggleCommand(npcRegistry))
                 .addSubcommand("skin", new SkinCommand(skinCache, npcRegistry, typeRegistry, propertyRegistry))

@@ -5,7 +5,6 @@ import lol.pyr.director.adventure.command.CommandHandler;
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.znpcsplus.npc.NpcEntryImpl;
 import lol.pyr.znpcsplus.npc.NpcRegistryImpl;
-import lol.pyr.znpcsplus.npc.NpcTypeImpl;
 import lol.pyr.znpcsplus.npc.NpcTypeRegistryImpl;
 import lol.pyr.znpcsplus.util.NpcLocation;
 import net.kyori.adventure.text.Component;
@@ -17,32 +16,29 @@ import java.util.List;
 
 public class CloneCommand implements CommandHandler {
     private final NpcRegistryImpl npcRegistry;
-    private final NpcTypeRegistryImpl typeRegistry;
 
-    public CloneCommand(NpcRegistryImpl npcRegistry, NpcTypeRegistryImpl typeRegistry) {
+    public CloneCommand(NpcRegistryImpl npcRegistry) {
         this.npcRegistry = npcRegistry;
-        this.typeRegistry = typeRegistry;
     }
 
     @Override
     public void run(CommandContext context) throws  CommandExecutionException {
-        context.setUsage(context.getLabel() + " create <id> <type>");
+        context.setUsage(context.getLabel() + " clone <id> <new id>");
         Player player = context.ensureSenderIsPlayer();
 
         String id = context.popString();
-        if (npcRegistry.getById(id) != null) context.halt(Component.text("NPC with that ID already exists.", NamedTextColor.RED));
-        NpcTypeImpl type = context.parse(NpcTypeImpl.class);
+        if (npcRegistry.getById(id) == null) context.halt(Component.text("NPC with ID " + id + " does not exist.", NamedTextColor.RED));
+        String newId = context.popString();
+        if (npcRegistry.getById(newId) != null) context.halt(Component.text("NPC with ID " + newId + " already exists.", NamedTextColor.RED));
 
-        NpcEntryImpl entry = npcRegistry.create(id, player.getWorld(), type, new NpcLocation(player.getLocation()));
-        entry.enableEverything();
+        npcRegistry.clone(id, newId, player.getWorld(), new NpcLocation(player.getLocation()));
 
-        context.send(Component.text("Created a " + type.getName() + " NPC with ID " + id + ".", NamedTextColor.GREEN));
+        context.send(Component.text("Cloned NPC with ID " + id + " to ID " + newId + ".", NamedTextColor.GREEN));
     }
 
     @Override
     public List<String> suggest(CommandContext context) throws CommandExecutionException {
         if (context.argSize() == 1) return context.suggestCollection(npcRegistry.getModifiableIds());
-        if (context.argSize() == 2) return context.suggestStream(typeRegistry.getAllImpl().stream().map(NpcTypeImpl::getName));
         return Collections.emptyList();
     }
 }
