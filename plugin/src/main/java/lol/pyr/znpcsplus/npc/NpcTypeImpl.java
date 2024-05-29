@@ -164,7 +164,8 @@ public class NpcTypeImpl implements NpcType {
                     addProperties("panda_eating");
                 }
             }
-            if (EntityTypes.isTypeInstanceOf(type, EntityTypes.ABSTRACT_TAMEABLE_ANIMAL)) {
+            if (EntityTypes.isTypeInstanceOf(type, EntityTypes.ABSTRACT_TAMEABLE_ANIMAL) &&
+                    !(version.isNewerThanOrEquals(ServerVersion.V_1_14) && type.equals(EntityTypes.OCELOT))) {
                 addProperties("tamed", "sitting");
             }
             if (EntityTypes.isTypeInstanceOf(type, EntityTypes.GUARDIAN)) {
