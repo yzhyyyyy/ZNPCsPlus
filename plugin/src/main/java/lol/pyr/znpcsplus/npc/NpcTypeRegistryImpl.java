@@ -357,7 +357,8 @@ public class NpcTypeRegistryImpl implements NpcTypeRegistry {
                 .setHologramOffset(-1.675));
 
         register(builder(p, "warden", EntityTypes.WARDEN)
-                .setHologramOffset(0.925));
+                .setHologramOffset(0.925)
+                .addProperties("warden_anger"));
 
         if (!version.isNewerThanOrEquals(ServerVersion.V_1_20)) return;
 
