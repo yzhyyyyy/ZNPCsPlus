@@ -157,6 +157,7 @@ public class ZNpcImporter implements DataImporter {
 
             HologramImpl hologram = npc.getHologram();
             hologram.setOffset(model.getHologramHeight());
+            Collections.reverse(model.getHologramLines());
             for (String raw : model.getHologramLines()) {
                 Component line = textSerializer.deserialize(raw);
                 hologram.addTextLineComponent(line);
