@@ -368,6 +368,12 @@ public class NpcTypeRegistryImpl implements NpcTypeRegistry {
         register(builder(p, "camel", EntityTypes.CAMEL)
                 .setHologramOffset(0.25)
                 .addProperties("bashing", "camel_sitting"));
+
+        if (!version.isNewerThanOrEquals(ServerVersion.V_1_20_5)) return;
+
+        register(builder(p, "armadillo", EntityTypes.ARMADILLO)
+                .setHologramOffset(-1.475)
+                .addProperties("armadillo_state"));
     }
 
     public Collection<NpcType> getAll() {

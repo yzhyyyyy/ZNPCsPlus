@@ -86,6 +86,8 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         registerEnumSerializer(RabbitType.class);
         registerEnumSerializer(AttachDirection.class);
         registerEnumSerializer(Sound.class);
+        registerEnumSerializer(ArmadilloState.class);
+        registerEnumSerializer(WoldVariant.class);
 
         registerPrimitiveSerializers(Integer.class, Boolean.class, Double.class, Float.class, Long.class, Short.class, Byte.class, String.class);
 
@@ -411,7 +413,7 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
             register(new EncodedByteProperty<>("wolf_collar", DyeColor.BLUE, wolfIndex++, DyeColor::getDyeData));
         } else register(new EncodedIntegerProperty<>("wolf_collar", DyeColor.RED, wolfIndex++, Enum::ordinal));
         if (ver.isNewerThanOrEquals(ServerVersion.V_1_16)) {
-            register(new EncodedIntegerProperty<>("wolf_angry", false, wolfIndex, b -> b ? 1 : 0));
+            register(new EncodedIntegerProperty<>("wolf_angry", false, wolfIndex++, b -> b ? 1 : 0));
             linkProperties("tamed", "sitting");
         }
         else {
@@ -643,6 +645,14 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
 
         // Sniffer
         register(new CustomTypeProperty<>("sniffer_state", 17, SnifferState.IDLING, EntityDataTypes.SNIFFER_STATE, state -> com.github.retrooper.packetevents.protocol.entity.sniffer.SnifferState.valueOf(state.name())));
+
+        if (!ver.isNewerThanOrEquals(ServerVersion.V_1_20_5)) return;
+        // Armadillo
+        register(new CustomTypeProperty<>("armadillo_state", 17, ArmadilloState.IDLE, EntityDataTypes.ARMADILLO_STATE, state ->
+                com.github.retrooper.packetevents.protocol.entity.armadillo.ArmadilloState.valueOf(state.name())));
+
+        // Wolf
+        register(new EncodedIntegerProperty<>("wolf_variant", WoldVariant.PALE, wolfIndex, WoldVariant::getId, EntityDataTypes.WOLF_VARIANT));
     }
 
     private void registerSerializer(PropertySerializer<?> serializer) {

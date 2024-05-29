@@ -170,6 +170,11 @@ public class NpcTypeImpl implements NpcType {
             if (EntityTypes.isTypeInstanceOf(type, EntityTypes.GUARDIAN)) {
                 addProperties("is_retracting_spikes");
             }
+            if (version.isNewerThanOrEquals(ServerVersion.V_1_20_5)) {
+                if (EntityTypes.isTypeInstanceOf(type, EntityTypes.WOLF)) {
+                    addProperties("wolf_variant");
+                }
+            }
             return new NpcTypeImpl(name, type, hologramOffset, new HashSet<>(allowedProperties), defaultProperties);
         }
     }
