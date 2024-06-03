@@ -9,6 +9,7 @@ import com.github.retrooper.packetevents.protocol.nbt.NBTInt;
 import com.github.retrooper.packetevents.protocol.nbt.NBTString;
 import com.github.retrooper.packetevents.protocol.player.EquipmentSlot;
 import com.github.retrooper.packetevents.protocol.world.BlockFace;
+import lol.pyr.znpcsplus.ZNpcsPlusBootstrap;
 import lol.pyr.znpcsplus.api.entity.EntityProperty;
 import lol.pyr.znpcsplus.api.entity.EntityPropertyRegistry;
 import lol.pyr.znpcsplus.api.skin.SkinDescriptor;
@@ -103,7 +104,7 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
          */
     }
 
-    public void registerTypes(PacketFactory packetFactory, LegacyComponentSerializer textSerializer) {
+    public void registerTypes(ZNpcsPlusBootstrap plugin, PacketFactory packetFactory, LegacyComponentSerializer textSerializer) {
         ServerVersion ver = PacketEvents.getAPI().getServerManager().getVersion();
         boolean legacyBooleans = ver.isOlderThan(ServerVersion.V_1_9);
         boolean legacyNames = ver.isOlderThan(ServerVersion.V_1_9);
@@ -125,6 +126,8 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
         register(new DummyProperty<>("view_distance", configManager.getConfig().viewDistance()));
 
         register(new DummyProperty<>("permission_required", false));
+
+        register(new ForceBodyRotationProperty(plugin));
 
         register(new DummyProperty<>("player_knockback", false));
         register(new DummyProperty<>("player_knockback_exempt_permission", String.class));
