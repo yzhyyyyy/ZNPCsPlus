@@ -52,7 +52,7 @@ public class CitizensImporter implements DataImporter {
         this.propertyRegistry = propertyRegistry;
         this.skinCache = skinCache;
         this.dataFile = dataFile;
-        this.traitsRegistry = new CitizensTraitsRegistry(typeRegistry, propertyRegistry, skinCache);
+        this.traitsRegistry = new CitizensTraitsRegistry(typeRegistry, propertyRegistry, skinCache, taskScheduler);
         this.npcRegistry = npcRegistry;
     }
 
