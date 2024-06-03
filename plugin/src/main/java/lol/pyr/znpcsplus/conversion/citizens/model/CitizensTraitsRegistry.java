@@ -23,6 +23,7 @@ public class CitizensTraitsRegistry {
         register(new LookTrait(propertyRegistry));
         register(new CommandTrait(taskScheduler));
         register(new HologramTrait(textSerializer));
+        register(new EquipmentTrait(propertyRegistry));
     }
 
     public CitizensTrait getByName(String name) {
