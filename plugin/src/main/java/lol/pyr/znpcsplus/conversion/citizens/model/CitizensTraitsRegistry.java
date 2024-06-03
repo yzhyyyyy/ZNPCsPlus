@@ -24,6 +24,7 @@ public class CitizensTraitsRegistry {
         register(new CommandTrait(taskScheduler));
         register(new HologramTrait(textSerializer));
         register(new EquipmentTrait(propertyRegistry));
+        register(new SpawnedTrait());
     }
 
     public CitizensTrait getByName(String name) {
