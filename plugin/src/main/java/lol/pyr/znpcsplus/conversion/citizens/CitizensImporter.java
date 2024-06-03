@@ -52,7 +52,7 @@ public class CitizensImporter implements DataImporter {
         this.propertyRegistry = propertyRegistry;
         this.skinCache = skinCache;
         this.dataFile = dataFile;
-        this.traitsRegistry = new CitizensTraitsRegistry(typeRegistry, propertyRegistry, skinCache, taskScheduler);
+        this.traitsRegistry = new CitizensTraitsRegistry(typeRegistry, propertyRegistry, skinCache, taskScheduler, textSerializer);
         this.npcRegistry = npcRegistry;
     }
 
@@ -83,7 +83,6 @@ public class CitizensImporter implements DataImporter {
             NpcImpl npc = new NpcImpl(uuid, propertyRegistry, configManager, packetFactory, textSerializer, world, typeRegistry.getByName("armor_stand"), new NpcLocation(0, 0, 0, 0, 0));
             npc.getType().applyDefaultProperties(npc);
 
-            npc.getHologram().addTextLineComponent(textSerializer.deserialize(name));
             ConfigurationSection traits = npcSection.getConfigurationSection("traits");
             if (traits != null) {
                 for (String traitName : traits.getKeys(false)) {

@@ -5,13 +5,14 @@ import lol.pyr.znpcsplus.api.npc.NpcTypeRegistry;
 import lol.pyr.znpcsplus.conversion.citizens.model.traits.*;
 import lol.pyr.znpcsplus.scheduling.TaskScheduler;
 import lol.pyr.znpcsplus.skin.cache.MojangSkinCache;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 import java.util.HashMap;
 
 public class CitizensTraitsRegistry {
     private final HashMap<String, CitizensTrait> traitMap = new HashMap<>();
 
-    public CitizensTraitsRegistry(NpcTypeRegistry typeRegistry, EntityPropertyRegistry propertyRegistry, MojangSkinCache skinCache, TaskScheduler taskScheduler) {
+    public CitizensTraitsRegistry(NpcTypeRegistry typeRegistry, EntityPropertyRegistry propertyRegistry, MojangSkinCache skinCache, TaskScheduler taskScheduler, LegacyComponentSerializer textSerializer) {
         register(new LocationTrait());
         register(new TypeTrait(typeRegistry));
         register(new ProfessionTrait(propertyRegistry));
@@ -21,6 +22,7 @@ public class CitizensTraitsRegistry {
         register(new SkinLayersTrait(propertyRegistry));
         register(new LookTrait(propertyRegistry));
         register(new CommandTrait(taskScheduler));
+        register(new HologramTrait(textSerializer));
     }
 
     public CitizensTrait getByName(String name) {
