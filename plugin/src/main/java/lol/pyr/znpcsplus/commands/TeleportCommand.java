@@ -9,6 +9,7 @@ import lol.pyr.znpcsplus.npc.NpcRegistryImpl;
 import lol.pyr.znpcsplus.util.FoliaUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
@@ -26,7 +27,9 @@ public class TeleportCommand implements CommandHandler {
         context.setUsage(context.getLabel() + " teleport <id>");
         Player player = context.ensureSenderIsPlayer();
         NpcImpl npc = context.parse(NpcEntryImpl.class).getNpc();
-        FoliaUtil.teleport(player, npc.getBukkitLocation());
+        Location location = npc.getBukkitLocation();
+        if (location == null) context.halt("Unable to teleport to NPC, the world is not loaded!");
+        FoliaUtil.teleport(player, location);
         context.send(Component.text("Teleported to NPC!", NamedTextColor.GREEN));
     }
 
