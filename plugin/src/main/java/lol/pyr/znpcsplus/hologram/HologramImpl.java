@@ -147,10 +147,12 @@ public class HologramImpl extends Viewable implements Hologram {
         for (HologramLine<?> line : lines) line.hide(player);
     }
 
+    @Override
     public long getRefreshDelay() {
         return refreshDelay;
     }
 
+    @Override
     public void setRefreshDelay(long refreshDelay) {
         this.refreshDelay = refreshDelay;
     }

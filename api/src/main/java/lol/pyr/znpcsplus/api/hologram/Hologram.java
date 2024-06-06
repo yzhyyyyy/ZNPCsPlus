@@ -41,4 +41,16 @@ public interface Hologram {
      * @return The number of lines in the hologram
      */
     int lineCount();
+
+    /**
+     * Gets the refresh delay of the hologram
+     * @return The refresh delay of the hologram
+     */
+    long getRefreshDelay();
+
+    /**
+     * Sets the refresh delay of the hologram
+     * @param delay The delay to set
+     */
+    void setRefreshDelay(long delay);
 }
