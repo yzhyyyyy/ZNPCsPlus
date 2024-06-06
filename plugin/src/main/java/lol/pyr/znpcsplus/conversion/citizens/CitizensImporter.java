@@ -4,6 +4,7 @@ import lol.pyr.znpcsplus.config.ConfigManager;
 import lol.pyr.znpcsplus.conversion.DataImporter;
 import lol.pyr.znpcsplus.conversion.citizens.model.CitizensTrait;
 import lol.pyr.znpcsplus.conversion.citizens.model.CitizensTraitsRegistry;
+import lol.pyr.znpcsplus.conversion.citizens.model.traits.TypeTrait;
 import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
 import lol.pyr.znpcsplus.npc.NpcEntryImpl;
 import lol.pyr.znpcsplus.npc.NpcImpl;
@@ -52,7 +53,7 @@ public class CitizensImporter implements DataImporter {
         this.propertyRegistry = propertyRegistry;
         this.skinCache = skinCache;
         this.dataFile = dataFile;
-        this.traitsRegistry = new CitizensTraitsRegistry(typeRegistry, propertyRegistry, skinCache, taskScheduler, textSerializer);
+        this.traitsRegistry = new CitizensTraitsRegistry(propertyRegistry, skinCache, taskScheduler, textSerializer);
         this.npcRegistry = npcRegistry;
     }
 
@@ -81,10 +82,12 @@ public class CitizensImporter implements DataImporter {
                 world = Bukkit.getWorlds().get(0).getName();
             }
             NpcImpl npc = new NpcImpl(uuid, propertyRegistry, configManager, packetFactory, textSerializer, world, typeRegistry.getByName("armor_stand"), new NpcLocation(0, 0, 0, 0, 0));
-            npc.getType().applyDefaultProperties(npc);
 
             ConfigurationSection traits = npcSection.getConfigurationSection("traits");
             if (traits != null) {
+                TypeTrait typeTrait = new TypeTrait(typeRegistry);
+                npc = typeTrait.apply(npc, traits.getString("type"));
+                npc.getType().applyDefaultProperties(npc);
                 for (String traitName : traits.getKeys(false)) {
                     Object trait = traits.get(traitName);
                     CitizensTrait citizensTrait = traitsRegistry.getByName(traitName);
@@ -92,6 +95,10 @@ public class CitizensImporter implements DataImporter {
                         npc = citizensTrait.apply(npc, trait);
                     }
                 }
+            }
+            boolean nameVisible = Boolean.parseBoolean(npcSection.getString("metadata.name-visible", "true"));
+            if (nameVisible) {
+                npc.getHologram().addTextLineComponent(textSerializer.deserialize(name));
             }
             String id = key.toLowerCase();
             while (npcRegistry.getById(id) != null) {
