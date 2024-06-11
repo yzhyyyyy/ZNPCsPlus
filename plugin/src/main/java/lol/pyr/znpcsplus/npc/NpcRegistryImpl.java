@@ -2,6 +2,7 @@ package lol.pyr.znpcsplus.npc;
 
 import lol.pyr.znpcsplus.ZNpcsPlus;
 import lol.pyr.znpcsplus.api.entity.EntityProperty;
+import lol.pyr.znpcsplus.api.interaction.InteractionAction;
 import lol.pyr.znpcsplus.api.npc.NpcEntry;
 import lol.pyr.znpcsplus.api.npc.NpcRegistry;
 import lol.pyr.znpcsplus.api.npc.NpcType;
@@ -10,8 +11,7 @@ import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
 import lol.pyr.znpcsplus.hologram.HologramItem;
 import lol.pyr.znpcsplus.hologram.HologramLine;
 import lol.pyr.znpcsplus.hologram.HologramText;
-import lol.pyr.znpcsplus.interaction.ActionRegistry;
-import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
+import lol.pyr.znpcsplus.interaction.ActionRegistryImpl;
 import lol.pyr.znpcsplus.packets.PacketFactory;
 import lol.pyr.znpcsplus.scheduling.TaskScheduler;
 import lol.pyr.znpcsplus.storage.NpcStorage;
@@ -35,7 +35,7 @@ public class NpcRegistryImpl implements NpcRegistry {
     private final Map<String, NpcEntryImpl> npcIdLookupMap = new HashMap<>();
     private final Map<UUID, NpcEntryImpl> npcUuidLookupMap = new HashMap<>();
 
-    public NpcRegistryImpl(ConfigManager configManager, ZNpcsPlus plugin, PacketFactory packetFactory, ActionRegistry actionRegistry, TaskScheduler scheduler, NpcTypeRegistryImpl typeRegistry, EntityPropertyRegistryImpl propertyRegistry, LegacyComponentSerializer textSerializer) {
+    public NpcRegistryImpl(ConfigManager configManager, ZNpcsPlus plugin, PacketFactory packetFactory, ActionRegistryImpl actionRegistry, TaskScheduler scheduler, NpcTypeRegistryImpl typeRegistry, EntityPropertyRegistryImpl propertyRegistry, LegacyComponentSerializer textSerializer) {
         this.textSerializer = textSerializer;
         this.propertyRegistry = propertyRegistry;
         storage = configManager.getConfig().storageType().create(configManager, plugin, packetFactory, actionRegistry, typeRegistry, propertyRegistry, textSerializer);
@@ -168,7 +168,7 @@ public class NpcRegistryImpl implements NpcRegistry {
             newNpc.getNpc().UNSAFE_setProperty(property, oldNpc.getNpc().getProperty(property));
         }
 
-        for (InteractionActionImpl action : oldNpc.getNpc().getActions()) {
+        for (InteractionAction action : oldNpc.getNpc().getActions()) {
             newNpc.getNpc().addAction(action);
         }
 

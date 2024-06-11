@@ -143,7 +143,7 @@ public class FancyNpcsImporter implements DataImporter {
             if (!messages.isEmpty()) {
                 long cooldown = npcSection.getLong("interactionCooldown", 0);
                 for (String message : messages) {
-                    npc.addAction(new MessageAction(adventure, message, InteractionType.ANY_CLICK, textSerializer, cooldown, 0));
+                    npc.addAction(new MessageAction(adventure, textSerializer, message, InteractionType.ANY_CLICK, cooldown, 0));
                 }
             }
             String id = npcSection.getString("name");

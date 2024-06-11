@@ -17,7 +17,7 @@ public class MessageAction extends InteractionActionImpl {
     private final String message;
     private final LegacyComponentSerializer textSerializer;
 
-    public MessageAction(BukkitAudiences adventure, String message, InteractionType interactionType, LegacyComponentSerializer textSerializer, long cooldown, long delay) {
+    public MessageAction(BukkitAudiences adventure, LegacyComponentSerializer textSerializer, String message, InteractionType interactionType, long cooldown, long delay) {
         super(cooldown, delay, interactionType);
         this.adventure = adventure;
         this.message = message;

@@ -1,6 +1,8 @@
 package lol.pyr.znpcsplus.api;
 
 import lol.pyr.znpcsplus.api.entity.EntityPropertyRegistry;
+import lol.pyr.znpcsplus.api.interaction.ActionFactory;
+import lol.pyr.znpcsplus.api.interaction.ActionRegistry;
 import lol.pyr.znpcsplus.api.npc.NpcRegistry;
 import lol.pyr.znpcsplus.api.npc.NpcTypeRegistry;
 import lol.pyr.znpcsplus.api.skin.SkinDescriptorFactory;
@@ -26,6 +28,18 @@ public interface NpcApi {
      * @return the entity property registry
      */
     EntityPropertyRegistry getPropertyRegistry();
+
+    /**
+     * Gets the action registry.
+     * @return the action registry
+     */
+    ActionRegistry getActionRegistry();
+
+    /**
+     * Gets the action factory.
+     * @return the action factory
+     */
+    ActionFactory getActionFactory();
 
     /**
      * Gets the skin descriptor factory.

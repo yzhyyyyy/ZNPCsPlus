@@ -3,8 +3,8 @@ package lol.pyr.znpcsplus.commands.action;
 import lol.pyr.director.adventure.command.CommandContext;
 import lol.pyr.director.adventure.command.CommandHandler;
 import lol.pyr.director.common.command.CommandExecutionException;
-import lol.pyr.znpcsplus.interaction.ActionRegistry;
-import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
+import lol.pyr.znpcsplus.api.interaction.InteractionAction;
+import lol.pyr.znpcsplus.interaction.ActionRegistryImpl;
 import lol.pyr.znpcsplus.interaction.InteractionCommandHandler;
 import lol.pyr.znpcsplus.npc.NpcEntryImpl;
 import lol.pyr.znpcsplus.npc.NpcRegistryImpl;
@@ -18,11 +18,11 @@ import java.util.stream.Stream;
 
 public class ActionEditCommand implements CommandHandler {
     private final NpcRegistryImpl npcRegistry;
-    private final ActionRegistry actionRegistry;
+    private final ActionRegistryImpl actionRegistry;
 
     private InteractionCommandHandler commandHandler = null;
 
-    public ActionEditCommand(NpcRegistryImpl npcRegistry, ActionRegistry actionRegistry) {
+    public ActionEditCommand(NpcRegistryImpl npcRegistry, ActionRegistryImpl actionRegistry) {
         this.npcRegistry = npcRegistry;
         this.actionRegistry = actionRegistry;
     }
@@ -42,7 +42,7 @@ public class ActionEditCommand implements CommandHandler {
             context.send(Component.text("Invalid action type, available action types:\n" +
                     commands.stream().map(InteractionCommandHandler::getSubcommandName).collect(Collectors.joining(", ")), NamedTextColor.RED));
         }
-        InteractionActionImpl newAction = this.commandHandler.parse(context);
+        InteractionAction newAction = this.commandHandler.parse(context);
         entry.getNpc().editAction(index, newAction);
         context.send(Component.text("Edited action with index " + index + " of Npc " + entry.getId(), NamedTextColor.GREEN));
     }

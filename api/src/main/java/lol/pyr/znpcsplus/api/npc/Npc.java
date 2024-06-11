@@ -76,6 +76,31 @@ public interface Npc extends PropertyHolder {
     List<? extends InteractionAction> getActions();
 
     /**
+     * Removes an action from this NPC
+     * @param index The index of the action to remove
+     */
+    void removeAction(int index);
+
+    /**
+     * Adds an action to this NPC
+     * @param action The {@link InteractionAction} to add
+     */
+    void addAction(InteractionAction action);
+
+    /**
+     * Edits an action for this NPC
+     * @param index The index of the action to edit
+    * @param action The {@link InteractionAction} to set
+    */
+    void editAction(int index, InteractionAction action);
+
+
+    /**
+     * Clears all actions from this NPC
+     */
+    void clearActions();
+
+    /**
      * Gets if this NPC is visible to a player
      * @param player The {@link Player} to check
      * @return If this NPC is visible to the player

@@ -3,6 +3,7 @@ package lol.pyr.znpcsplus.npc;
 import com.github.retrooper.packetevents.protocol.entity.data.EntityData;
 import io.github.retrooper.packetevents.util.SpigotConversionUtil;
 import lol.pyr.znpcsplus.api.entity.EntityProperty;
+import lol.pyr.znpcsplus.api.interaction.InteractionAction;
 import lol.pyr.znpcsplus.api.npc.Npc;
 import lol.pyr.znpcsplus.api.npc.NpcType;
 import lol.pyr.znpcsplus.config.ConfigManager;
@@ -10,7 +11,6 @@ import lol.pyr.znpcsplus.entity.EntityPropertyImpl;
 import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
 import lol.pyr.znpcsplus.entity.PacketEntity;
 import lol.pyr.znpcsplus.hologram.HologramImpl;
-import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
 import lol.pyr.znpcsplus.packets.PacketFactory;
 import lol.pyr.znpcsplus.util.NpcLocation;
 import lol.pyr.znpcsplus.util.Viewable;
@@ -36,7 +36,7 @@ public class NpcImpl extends Viewable implements Npc {
     private final UUID uuid;
 
     private final Map<EntityPropertyImpl<?>, Object> propertyMap = new HashMap<>();
-    private final List<InteractionActionImpl> actions = new ArrayList<>();
+    private final List<InteractionAction> actions = new ArrayList<>();
 
     protected NpcImpl(UUID uuid, EntityPropertyRegistryImpl propertyRegistry, ConfigManager configManager, LegacyComponentSerializer textSerializer, World world, NpcTypeImpl type, NpcLocation location, PacketFactory packetFactory) {
         this(uuid, propertyRegistry, configManager, packetFactory, textSerializer, world.getName(), type, location);
@@ -200,23 +200,28 @@ public class NpcImpl extends Viewable implements Npc {
         return Collections.unmodifiableSet(propertyMap.keySet()).stream().filter(type::isAllowedProperty).collect(Collectors.toSet());
     }
 
-    public List<InteractionActionImpl> getActions() {
+    @Override
+    public List<InteractionAction> getActions() {
         return Collections.unmodifiableList(actions);
     }
 
+    @Override
     public void removeAction(int index) {
         actions.remove(index);
     }
 
+    @Override
+    public void addAction(InteractionAction action) {
+        actions.add(action);
+    }
+
+    @Override
     public void clearActions() {
         actions.clear();
     }
 
-    public void addAction(InteractionActionImpl action) {
-        actions.add(action);
-    }
-
-    public void editAction(int index, InteractionActionImpl action) {
+    @Override
+    public void editAction(int index, InteractionAction action) {
         actions.set(index, action);
     }
 

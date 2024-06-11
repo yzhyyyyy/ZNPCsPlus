@@ -14,7 +14,7 @@ public class SwitchServerAction extends InteractionActionImpl {
     private final String server;
     private final BungeeConnector bungeeConnector;
 
-    public SwitchServerAction(String server, InteractionType interactionType, long cooldown, long delay, BungeeConnector bungeeConnector) {
+    public SwitchServerAction(BungeeConnector bungeeConnector, String server, InteractionType interactionType, long cooldown, long delay) {
         super(cooldown, delay, interactionType);
         this.server = server;
         this.bungeeConnector = bungeeConnector;

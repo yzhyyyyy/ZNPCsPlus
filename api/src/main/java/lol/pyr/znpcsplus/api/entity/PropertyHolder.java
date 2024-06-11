@@ -48,6 +48,7 @@ public interface PropertyHolder {
      * when using item properties, read https://github.com/Pyrbu/ZNPCsPlus/pull/129#issuecomment-1948777764
      *
      * @param key Unique key representing a property
+     * @return the {@link ItemStack} associated with the provided property key and this holder
      */
     ItemStack getItemProperty(EntityProperty<?> key);
 

@@ -27,7 +27,8 @@ import lol.pyr.znpcsplus.config.ConfigManager;
 import lol.pyr.znpcsplus.conversion.DataImporterRegistry;
 import lol.pyr.znpcsplus.entity.EntityPropertyImpl;
 import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
-import lol.pyr.znpcsplus.interaction.ActionRegistry;
+import lol.pyr.znpcsplus.interaction.ActionFactoryImpl;
+import lol.pyr.znpcsplus.interaction.ActionRegistryImpl;
 import lol.pyr.znpcsplus.interaction.InteractionPacketListener;
 import lol.pyr.znpcsplus.npc.*;
 import lol.pyr.znpcsplus.packets.*;
@@ -117,7 +118,9 @@ public class ZNpcsPlus {
         PacketFactory packetFactory = setupPacketFactory(scheduler, propertyRegistry, configManager);
         propertyRegistry.registerTypes(bootstrap, packetFactory, textSerializer);
 
-        ActionRegistry actionRegistry = new ActionRegistry();
+        BungeeConnector bungeeConnector = new BungeeConnector(bootstrap);
+        ActionRegistryImpl actionRegistry = new ActionRegistryImpl();
+        ActionFactoryImpl actionFactory = new ActionFactoryImpl(scheduler, adventure, textSerializer, bungeeConnector);
         NpcTypeRegistryImpl typeRegistry = new NpcTypeRegistryImpl();
         NpcRegistryImpl npcRegistry = new NpcRegistryImpl(configManager, this, packetFactory, actionRegistry,
                 scheduler, typeRegistry, propertyRegistry, textSerializer);
@@ -125,8 +128,7 @@ public class ZNpcsPlus {
 
         UserManager userManager = new UserManager();
         shutdownTasks.add(userManager::shutdown);
-        
-        BungeeConnector bungeeConnector = new BungeeConnector(bootstrap);
+
         DataImporterRegistry importerRegistry = new DataImporterRegistry(configManager, adventure,
                 scheduler, packetFactory, textSerializer, typeRegistry, getDataFolder().getParentFile(),
                 propertyRegistry, skinCache, npcRegistry, bungeeConnector);
@@ -177,7 +179,7 @@ public class ZNpcsPlus {
             }
         }
 
-        NpcApiProvider.register(bootstrap, new ZNpcsPlusApi(npcRegistry, typeRegistry, propertyRegistry, skinCache));
+        NpcApiProvider.register(bootstrap, new ZNpcsPlusApi(npcRegistry, typeRegistry, propertyRegistry, actionRegistry, actionFactory, skinCache));
         log(ChatColor.WHITE + " * Loading complete! (" + (System.currentTimeMillis() - before) + "ms)");
         log("");
 
@@ -227,7 +229,7 @@ public class ZNpcsPlus {
     }
 
     private void registerCommands(NpcRegistryImpl npcRegistry, MojangSkinCache skinCache, BukkitAudiences adventure,
-                                  ActionRegistry actionRegistry, NpcTypeRegistryImpl typeRegistry,
+                                  ActionRegistryImpl actionRegistry, NpcTypeRegistryImpl typeRegistry,
                                   EntityPropertyRegistryImpl propertyRegistry, DataImporterRegistry importerRegistry,
                                   ConfigManager configManager) {
 

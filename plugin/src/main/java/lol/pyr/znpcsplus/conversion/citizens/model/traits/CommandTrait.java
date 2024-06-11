@@ -1,8 +1,8 @@
 package lol.pyr.znpcsplus.conversion.citizens.model.traits;
 
+import lol.pyr.znpcsplus.api.interaction.InteractionAction;
 import lol.pyr.znpcsplus.api.interaction.InteractionType;
 import lol.pyr.znpcsplus.conversion.citizens.model.SectionCitizensTrait;
-import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
 import lol.pyr.znpcsplus.interaction.consolecommand.ConsoleCommandAction;
 import lol.pyr.znpcsplus.interaction.playercommand.PlayerCommandAction;
 import lol.pyr.znpcsplus.npc.NpcImpl;
@@ -35,7 +35,7 @@ public class CommandTrait extends SectionCitizensTrait {
                     int cooldown = commandSection.getInt("cooldown", 0);
                     int delay = commandSection.getInt("delay", 0);
                     if (command != null) {
-                        InteractionActionImpl action;
+                        InteractionAction action;
                         if (isPlayerCommand) {
                             action = new PlayerCommandAction(scheduler, command, clickType, cooldown, delay);
                         } else {

@@ -3,6 +3,7 @@ package lol.pyr.znpcsplus.interaction;
 import lol.pyr.director.adventure.command.CommandContext;
 import lol.pyr.director.adventure.command.CommandHandler;
 import lol.pyr.director.common.command.CommandExecutionException;
+import lol.pyr.znpcsplus.api.interaction.InteractionAction;
 import lol.pyr.znpcsplus.npc.NpcEntryImpl;
 import lol.pyr.znpcsplus.npc.NpcImpl;
 import net.kyori.adventure.text.Component;
@@ -11,7 +12,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 public interface InteractionCommandHandler extends CommandHandler {
     String getSubcommandName();
 
-    InteractionActionImpl parse(CommandContext context) throws CommandExecutionException;
+    InteractionAction parse(CommandContext context) throws CommandExecutionException;
     void appendUsage(CommandContext context);
 
     @Override

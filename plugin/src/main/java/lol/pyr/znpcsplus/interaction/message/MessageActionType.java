@@ -4,7 +4,7 @@ import lol.pyr.director.adventure.command.CommandContext;
 import lol.pyr.director.common.command.CommandExecutionException;
 import lol.pyr.znpcsplus.api.interaction.InteractionType;
 import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
-import lol.pyr.znpcsplus.interaction.InteractionActionType;
+import lol.pyr.znpcsplus.api.interaction.InteractionActionType;
 import lol.pyr.znpcsplus.interaction.InteractionCommandHandler;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -32,7 +32,7 @@ public class MessageActionType implements InteractionActionType<MessageAction>, 
     public MessageAction deserialize(String str) {
         String[] split = str.split(";");
         InteractionType type = split.length > 2 ? InteractionType.valueOf(split[2]) : InteractionType.ANY_CLICK;
-        return new MessageAction(adventure, new String(Base64.getDecoder().decode(split[0]), StandardCharsets.UTF_8), type, textSerializer, Long.parseLong(split[1]), Long.parseLong(split.length > 3 ? split[3] : "0"));
+        return new MessageAction(adventure, textSerializer, new String(Base64.getDecoder().decode(split[0]), StandardCharsets.UTF_8), type, Long.parseLong(split[1]), Long.parseLong(split.length > 3 ? split[3] : "0"));
     }
 
     @Override
@@ -56,7 +56,7 @@ public class MessageActionType implements InteractionActionType<MessageAction>, 
         long cooldown = (long) (context.parse(Double.class) * 1000D);
         long delay = (long) (context.parse(Integer.class) * 1D);
         String message = context.dumpAllArgs();
-        return new MessageAction(adventure, message, type, textSerializer, cooldown, delay);
+        return new MessageAction(adventure, textSerializer, message, type, cooldown, delay);
     }
 
     @Override

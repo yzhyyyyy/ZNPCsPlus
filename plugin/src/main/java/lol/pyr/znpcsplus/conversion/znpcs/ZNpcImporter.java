@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import lol.pyr.znpcsplus.api.interaction.InteractionAction;
 import lol.pyr.znpcsplus.api.interaction.InteractionType;
 import lol.pyr.znpcsplus.api.skin.SkinDescriptor;
 import lol.pyr.znpcsplus.config.ConfigManager;
@@ -12,7 +13,6 @@ import lol.pyr.znpcsplus.conversion.znpcs.model.*;
 import lol.pyr.znpcsplus.entity.EntityPropertyImpl;
 import lol.pyr.znpcsplus.entity.EntityPropertyRegistryImpl;
 import lol.pyr.znpcsplus.hologram.HologramImpl;
-import lol.pyr.znpcsplus.interaction.InteractionActionImpl;
 import lol.pyr.znpcsplus.interaction.consolecommand.ConsoleCommandAction;
 import lol.pyr.znpcsplus.interaction.message.MessageAction;
 import lol.pyr.znpcsplus.interaction.playerchat.PlayerChatAction;
@@ -146,7 +146,7 @@ public class ZNpcImporter implements DataImporter {
                             for (String line : lines) {
 
                                 // Create a new message action for each line of text
-                                InteractionActionImpl action = new MessageAction(adventure, line, InteractionType.ANY_CLICK, textSerializer, 0, totalDelay);
+                                InteractionAction action = new MessageAction(adventure, textSerializer, line, InteractionType.ANY_CLICK, 0, totalDelay);
                                 npc.addAction(action);
                             }
                         }
@@ -222,7 +222,7 @@ public class ZNpcImporter implements DataImporter {
         throw new IllegalArgumentException("Couldn't adapt znpcs click type: " + clickType);
     }
 
-    private InteractionActionImpl adaptAction(String type, InteractionType clickType, String parameter, int cooldown) {
+    private InteractionAction adaptAction(String type, InteractionType clickType, String parameter, int cooldown) {
         switch (type.toLowerCase()) {
             case "cmd":
                 return new PlayerCommandAction(taskScheduler, parameter, clickType, cooldown * 1000L, 0);
@@ -231,9 +231,9 @@ public class ZNpcImporter implements DataImporter {
             case "chat":
                 return new PlayerChatAction(taskScheduler, parameter, clickType, cooldown * 1000L, 0);
             case "message":
-                return new MessageAction(adventure, parameter, clickType, textSerializer, cooldown * 1000L, 0);
+                return new MessageAction(adventure, textSerializer, parameter, clickType, cooldown * 1000L, 0);
             case "server":
-                return new SwitchServerAction(parameter, clickType, cooldown * 1000L, 0, bungeeConnector);
+                return new SwitchServerAction(bungeeConnector, parameter, clickType, cooldown * 1000L, 0);
         }
         throw new IllegalArgumentException("Couldn't adapt znpcs click action: " + type);
     }
