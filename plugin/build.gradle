@@ -16,17 +16,17 @@ processResources {
 }
 
 dependencies {
-    compileOnly "me.clip:placeholderapi:2.11.5" // Placeholder support
+    compileOnly "me.clip:placeholderapi:2.11.6" // Placeholder support
     implementation "com.google.code.gson:gson:2.10.1" // JSON parsing
     implementation "org.bstats:bstats-bukkit:3.0.2" // Plugin stats
     implementation "me.robertlit:SpigotResourcesAPI:2.0" // Spigot API wrapper for update checker
     implementation "com.github.retrooper.packetevents:spigot:2.3.0" // Packets
     implementation "space.arim.dazzleconf:dazzleconf-ext-snakeyaml:1.2.1" // Configs
-    implementation "lol.pyr:director-adventure:2.1.1" // Commands
+    implementation "lol.pyr:director-adventure:2.1.2" // Commands
 
     // Fancy text library
-    implementation "net.kyori:adventure-platform-bukkit:4.3.2"
-    implementation "net.kyori:adventure-text-minimessage:4.15.0"
+    implementation "net.kyori:adventure-platform-bukkit:4.3.3"
+    implementation "net.kyori:adventure-text-minimessage:4.17.0"
 
     implementation project(":api")
 }
