@@ -38,7 +38,6 @@ public class ActionRegistryImpl implements ActionRegistry {
 
     public List<InteractionCommandHandler> getCommands() {
         return serializerMap.values().stream()
-                .filter(type -> type instanceof  InteractionActionImpl)
                 .filter(type -> type instanceof InteractionCommandHandler)
                 .map(type -> (InteractionCommandHandler) type)
                 .collect(Collectors.toList());
