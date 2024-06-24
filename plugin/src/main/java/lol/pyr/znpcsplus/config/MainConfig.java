@@ -73,4 +73,9 @@ public interface MainConfig {
     @ConfComments("The display name to use for npcs in the player list (aka tab)")
     @DefaultString("ZNPC[{id}]")
     String tabDisplayName();
+
+    @ConfKey("fake-enforce-secure-chat")
+    @ConfComments("Should the plugin fake the enforce secure chat packet to hide the popup?")
+    @DefaultBoolean(false)
+    boolean fakeEnforceSecureChat();
 }

@@ -43,6 +43,7 @@ import lol.pyr.znpcsplus.tasks.NpcProcessorTask;
 import lol.pyr.znpcsplus.tasks.ViewableHideOnLeaveListener;
 import lol.pyr.znpcsplus.updater.UpdateChecker;
 import lol.pyr.znpcsplus.updater.UpdateNotificationListener;
+import lol.pyr.znpcsplus.user.ClientPacketListener;
 import lol.pyr.znpcsplus.user.UserListener;
 import lol.pyr.znpcsplus.user.UserManager;
 import lol.pyr.znpcsplus.util.*;
@@ -141,6 +142,7 @@ public class ZNpcsPlus {
         typeRegistry.registerDefault(packetEvents, propertyRegistry);
         actionRegistry.registerTypes(scheduler, adventure, textSerializer, bungeeConnector);
         packetEvents.getEventManager().registerListener(new InteractionPacketListener(userManager, npcRegistry, typeRegistry, scheduler), PacketListenerPriority.MONITOR);
+        packetEvents.getEventManager().registerListener(new ClientPacketListener(configManager), PacketListenerPriority.LOWEST);
         new Metrics(bootstrap, 18244);
         pluginManager.registerEvents(new UserListener(userManager), bootstrap);
 
