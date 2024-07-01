@@ -377,6 +377,15 @@ public class NpcTypeRegistryImpl implements NpcTypeRegistry {
         register(builder(p, "armadillo", EntityTypes.ARMADILLO)
                 .setHologramOffset(-1.325)
                 .addProperties("armadillo_state"));
+
+        if (!version.isNewerThanOrEquals(ServerVersion.V_1_21)) return;
+
+        register(builder(p, "bogged", EntityTypes.BOGGED)
+                .setHologramOffset(0.015)
+                .addProperties("bogged_sheared"));
+
+        register(builder(p, "breeze", EntityTypes.BREEZE)
+                .setHologramOffset(-0.205));
     }
 
     public Collection<NpcType> getAll() {

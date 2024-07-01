@@ -659,6 +659,11 @@ public class EntityPropertyRegistryImpl implements EntityPropertyRegistry {
 
         // Wolf
         register(new EncodedIntegerProperty<>("wolf_variant", WoldVariant.PALE, wolfIndex, WoldVariant::getId, EntityDataTypes.WOLF_VARIANT));
+
+        if (!ver.isNewerThanOrEquals(ServerVersion.V_1_21)) return;
+
+        // Bogged
+        register(new BooleanProperty("bogged_sheared", 16, false, legacyBooleans));
     }
 
     private void registerSerializer(PropertySerializer<?> serializer) {

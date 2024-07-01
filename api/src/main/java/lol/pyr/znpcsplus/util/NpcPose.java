@@ -20,5 +20,8 @@ public enum NpcPose {
     ROARING,
     SNIFFING,
     EMERGING,
-    DIGGING
+    DIGGING,
+    SLIDING,
+    SHOOTING,
+    INHALING,
 }
