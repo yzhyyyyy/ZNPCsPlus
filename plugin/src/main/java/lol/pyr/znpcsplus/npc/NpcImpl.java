@@ -56,6 +56,7 @@ public class NpcImpl extends Viewable implements Npc {
         UNSAFE_hideAll();
         this.type = type;
         entity = new PacketEntity(packetFactory, this, type.getType(), entity.getLocation());
+        hologram.setLocation(location.withY(location.getY() + type.getHologramOffset()));
         UNSAFE_showAll();
     }
 
