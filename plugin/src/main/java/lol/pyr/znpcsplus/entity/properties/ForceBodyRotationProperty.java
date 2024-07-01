@@ -18,7 +18,9 @@ public class ForceBodyRotationProperty extends DummyProperty<Boolean> {
 
     @Override
     public void apply(Player player, PacketEntity entity, boolean isSpawned, Map<Integer, EntityData> properties) {
-        Bukkit.getScheduler().runTaskLater(plugin, () -> entity.swingHand(player, false), 2L);
-        Bukkit.getScheduler().runTaskLater(plugin, () -> entity.swingHand(player, false), 6L);
+        if (entity.getProperty(this)) {
+            Bukkit.getScheduler().runTaskLater(plugin, () -> entity.swingHand(player, false), 2L);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> entity.swingHand(player, false), 6L);
+        }
     }
 }
