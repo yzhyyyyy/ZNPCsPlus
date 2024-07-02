@@ -27,6 +27,7 @@ import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scoreboard.Scoreboard;
 
 import java.util.*;
 import java.util.concurrent.CompletableFuture;
@@ -114,14 +115,20 @@ public class V1_8PacketFactory implements PacketFactory {
 
     @Override
     public void createTeam(Player player, PacketEntity entity, NamedColor namedColor) {
-        sendPacket(player, new WrapperPlayServerTeams("npc_team_" + entity.getEntityId(), WrapperPlayServerTeams.TeamMode.CREATE, new WrapperPlayServerTeams.ScoreBoardTeamInfo(
-                Component.text(" "), null, null,
-                WrapperPlayServerTeams.NameTagVisibility.NEVER,
-                WrapperPlayServerTeams.CollisionRule.NEVER,
-                namedColor == null ? NamedTextColor.WHITE : NamedTextColor.NAMES.value(namedColor.name().toLowerCase()),
-                WrapperPlayServerTeams.OptionData.NONE
-        )));
-        sendPacket(player, new WrapperPlayServerTeams("npc_team_" + entity.getEntityId(), WrapperPlayServerTeams.TeamMode.ADD_ENTITIES, (WrapperPlayServerTeams.ScoreBoardTeamInfo) null,
+        String teamName = "npc_team_" + entity.getEntityId();
+        Scoreboard scoreboard = player.getScoreboard();
+
+        if (scoreboard.getTeam(teamName) == null) {
+            sendPacket(player, new WrapperPlayServerTeams(teamName, WrapperPlayServerTeams.TeamMode.CREATE, new WrapperPlayServerTeams.ScoreBoardTeamInfo(
+                    Component.text(" "), null, null,
+                    WrapperPlayServerTeams.NameTagVisibility.NEVER,
+                    WrapperPlayServerTeams.CollisionRule.NEVER,
+                    namedColor == null ? NamedTextColor.WHITE : NamedTextColor.NAMES.value(namedColor.name().toLowerCase()),
+                    WrapperPlayServerTeams.OptionData.NONE
+            )));
+        }
+
+        sendPacket(player, new WrapperPlayServerTeams(teamName, WrapperPlayServerTeams.TeamMode.ADD_ENTITIES, (WrapperPlayServerTeams.ScoreBoardTeamInfo) null,
                 entity.getType() == EntityTypes.PLAYER ? Integer.toString(entity.getEntityId()) : entity.getUuid().toString()));
     }
 
